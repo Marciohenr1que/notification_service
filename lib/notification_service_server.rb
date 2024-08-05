@@ -1,5 +1,5 @@
 require 'grpc'
-require_relative '../lib/notification_services_pb'
+require_relative 'notification_services_pb'
 require_relative '../config/environment'
 
 class NotificationServiceServer < Notification::NotificationService::Service
