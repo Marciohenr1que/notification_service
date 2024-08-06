@@ -5,6 +5,16 @@ require_relative '../config/environment'
 class NotificationServiceServer < Notification::NotificationService::Service
   def send_notification(notification_request, _unused_call)
     puts "Received notification request: #{notification_request.inspect}"
+    create_notification(notification_request)
+  end
+  def send_webscraping_notification(webscraping_notification_request, _unused_call)
+    puts "Received webscraping notification request: #{webscraping_notification_request.inspect}"
+    
+    Notification::NotificationResponse.new(success: true, message: 'Webscraping notification received')
+  end
+  private
+
+  def create_notification(notification_request)
     begin
       UserNotification.create!(
         action: notification_request.action,
