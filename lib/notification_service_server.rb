@@ -2,34 +2,26 @@ require 'grpc'
 require_relative 'notification_services_pb'
 require_relative '../config/environment'
 
+
 class NotificationServiceServer < Notification::NotificationService::Service
   def send_notification(notification_request, _unused_call)
     puts "Received notification request: #{notification_request.inspect}"
-    create_notification(notification_request)
+
+    result = NotificationService.create_notification(
+      action: notification_request.action,
+      user_id: notification_request.user_id,
+      user_email: notification_request.user_email,
+      task_id: notification_request.task_id,
+      task_title: notification_request.task_title,
+      task_description: notification_request.task_description
+    )
+
+    Notification::NotificationResponse.new(success: result[:success], message: result[:message])
   end
+
   def send_webscraping_notification(webscraping_notification_request, _unused_call)
     puts "Received webscraping notification request: #{webscraping_notification_request.inspect}"
-    
     Notification::NotificationResponse.new(success: true, message: 'Webscraping notification received')
-  end
-  private
-
-  def create_notification(notification_request)
-    begin
-      UserNotification.create!(
-        action: notification_request.action,
-        user_id: notification_request.user_id,
-        user_email: notification_request.user_email,
-        task_id: notification_request.task_id,
-        task_title: notification_request.task_title,
-        task_description: notification_request.task_description
-      )
-      puts "Notification created successfully."
-      Notification::NotificationResponse.new(success: true, message: 'Notification received')
-    rescue => e
-      puts "Failed to create notification: #{e.message}"
-      Notification::NotificationResponse.new(success: false, message: e.message)
-    end
   end
 end
 
