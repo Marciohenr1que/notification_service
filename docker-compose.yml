@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  rails:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "rm -f tmp/pids/server.pid && ./bin/rails server -b '0.0.0.0' -p 3000"
+    volumes:
+      - .:/rails
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: sqlite3:///rails/db/development.sqlite3
+      # Ajuste o caminho do banco de dados conforme necessário para sua configuração
+
+  grpc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ruby bin/notification_service_server
+    volumes:
+      - .:/rails
+    ports:
+      - "50052:50052" # Ajuste a porta se necessário
+    depends_on:
+      - rails
+    stdin_open: true
+    tty: true
+
+volumes:
+  rails-data:
