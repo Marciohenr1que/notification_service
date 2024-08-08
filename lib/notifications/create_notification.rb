@@ -1,5 +1,6 @@
 module Notifications
-class CreateNotification < Callable
+class CreateNotification
+  extend Calleable
     def initialize(params)
       @params = params
     end

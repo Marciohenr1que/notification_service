@@ -1,10 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe NotificationService, type: :service do
-  # Configuração do `subject`
-  subject { NotificationService.create_notification(notification_params) }
+RSpec.describe Services::NotificationService, type: :service do
+  subject { Services::NotificationService.create_notification(notification_params) }
 
-  # Configuração do `before`
   before do
     @notification_params = attributes_for(:user_notification)
   end
@@ -13,7 +11,6 @@ RSpec.describe NotificationService, type: :service do
 
   context 'quando a notificação é criada com sucesso' do
     before do
-      # Configura o stub para o serviço Notifications::CreateNotification
       allow(Notifications::CreateNotification).to receive(:call).with(notification_params).and_return({ success: true, message: 'Notification received' })
     end
 
@@ -27,7 +24,6 @@ RSpec.describe NotificationService, type: :service do
 
   context 'quando ocorre um erro ao criar a notificação' do
     before do
-      # Simula uma falha ao criar a notificação
       allow(Notifications::CreateNotification).to receive(:call).with(notification_params).and_return({ success: false, message: 'Erro de Teste' })
     end
 
