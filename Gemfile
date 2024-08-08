@@ -9,7 +9,7 @@ gem 'google-protobuf'
 gem 'grpc-tools'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
-
+gem 'rubocop', require: false
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 
@@ -43,6 +43,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'faker'
   gem 'factory_bot_rails'
+  
 end
 
 group :development do

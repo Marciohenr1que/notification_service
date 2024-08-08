@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  # Serviço para a aplicação Rails
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://marcio:o4jAoDP5Sc601R7ZiNpDofL35q9p8UmC@dpg-cqmevvpu0jms73fs13fg-a.oregon-postgres.render.com:5432/my_database
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+    depends_on:
+      - db
+
+  # Serviço para o banco de dados PostgreSQL
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: marcio
+      POSTGRES_PASSWORD: o4jAoDP5Sc601R7ZiNpDofL35q9p8UmC
+      POSTGRES_DB: my_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Serviço para rodar o script Ruby
+  ruby_script:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ruby lib/notification_service_server.rb
+    environment:
+      RAILS_ENV: production
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

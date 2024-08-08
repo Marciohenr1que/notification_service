@@ -4,15 +4,12 @@ require_relative '../../lib/notification_services_pb'
 class NotificationServiceImpl < Notification::NotificationService::Service
   def send_notification(request)
     notification_params = {
-      action: request.action
+      action: request.action,
       user_id: request.user_id,
       user_email: request.user_email,
       task_id: request.task_id,
       task_title: request.task_title,
-      task_description: request.task_description,
-      
-      
-     
+      task_description: request.task_description,  
     }
 
     notification = NotificationRepository.create(notification_params)
