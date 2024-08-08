@@ -30,8 +30,13 @@ Execute o servidor:
 Construir Imagem Docker
 -Para construir a imagem Docker do serviço de notificação:
 
-bash
-Copiar código
+## Comandos
+
+### Construir Imagem Docker
+
+Para construir a imagem Docker do serviço de notificação:
+
+```bash
 docker build -t my_notification_service .
 Iniciar PostgreSQL e Serviço de Notificação
 Inicie o PostgreSQL e o serviço de notificação com Docker Compose:
