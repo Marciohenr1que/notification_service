@@ -22,12 +22,13 @@ Para rodar o serviço de notificação localmente com Ruby:
 Navegue até o diretório do projeto.
 
 Execute o servidor:
-
-bash
-Copiar código
-ruby lib/notification_service_server.rb
+- Modo dev
+- bundle install
+- executar comando abaixo 
+- ruby lib/notification_service_server.rb
+- rodando na porta 50052
 Construir Imagem Docker
-Para construir a imagem Docker do serviço de notificação:
+-Para construir a imagem Docker do serviço de notificação:
 
 bash
 Copiar código
